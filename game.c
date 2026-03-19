@@ -24,11 +24,14 @@ void init_player(Player* player) {
 
 void init_monster(Monster* monster) {
     strcpy(monster->Name, "Amogus");
-    monster->Hp = 12;
+    monster->Hp = 20;
 }
 
 void print_status(Player player,Monster monster){
     printf("\n--- MerRPG ---\n");
+    printf(" 0            /^^\\\n");
+    printf("/|\\           (00)\n");
+    printf("/ \\           /__\\\n");
     printf("%s HP: %d\n",player.Name, player.Hp);
     printf("%s HP: %d\n", monster.Name,monster.Hp);
 
@@ -43,7 +46,7 @@ void player_attack(Player* player,Monster* monster){
     }
 }
 void monster_attack(Player* player,Monster* monster){
-    int damage_monster = rand() % 3 + 1;
+    int damage_monster = rand() % 5 + 1;
     player ->Hp -= damage_monster;
     printf("Emeny caused %d damage\n",damage_monster);
         if (player ->Hp < 0) {
@@ -55,6 +58,11 @@ void monster_attack(Player* player,Monster* monster){
 
 int main() {
 srand(time(NULL));
+printf(" __  __           ____  ____   ____ \n");
+printf("|  \\/  | ___ _ __|  _ \\|  _ \\ / ___| \n");
+printf("| |\\/| |/ _ \\ '__| |_) | |_) | |  _ \n");
+printf("| |  | |  __/ |  |  _ <|  __/| |_| |\n");
+printf("|_|  |_|\\___|_|  |_| \\_\\_|    \\____|\n");
 int choice;
 Player player;
 Monster monster;
@@ -62,6 +70,7 @@ init_player(&player);
 init_monster(&monster);
 
 while(player.Hp > 0 && monster.Hp > 0 ) {
+    /*printf(" 0 \n")*/
     print_status(player,monster);
     printf("1 - Attack\n");
     printf("2 - Exit\n");
