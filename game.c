@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+
+
+
 typedef struct
 {
     char Name[15];
@@ -17,6 +21,12 @@ typedef struct
     int max_attack;
 } Monster ;
 
+typedef struct 
+{
+  int min_heal;
+  int max_heal;
+} Heal;
+
 void init_player(Player* player) {
     printf("Send Nickname: ");
     scanf("%14s",player->Name);
@@ -31,8 +41,7 @@ void init_monster(Monster* monster) {
     };
     int id = rand() %3;
     *monster = monster_list[id];
-    /*strcpy(monster->Name, "Amogus");
-    monster->Hp = 20;*/
+
 }
 
 void print_status(Player player,Monster monster){
@@ -62,6 +71,16 @@ void monster_attack(Player* player,Monster* monster){
     }
 }
 
+void player_heal(Player* player, Heal* heal) {
+    Heal healing = {1,6};
+    int heal_player = rand() % (heal ->max_heal - heal ->min_heal + 1) + heal->min_heal;
+    player ->Hp += heal_player;
+    printf("You have restored %d Hp\n", heal_player);
+    if (player ->Hp > 20) {
+        player ->Hp = 20;
+    }
+}
+
 
 
 int main() {
@@ -74,21 +93,26 @@ printf("|_|  |_|\\___|_|  |_| \\_\\_|    \\____|\n");
 int choice;
 Player player;
 Monster monster;
+Heal heal;
 init_player(&player);
 init_monster(&monster);
 
 while(player.Hp > 0 && monster.Hp > 0 ) {
     print_status(player,monster);
+    printf("[0] - Exit\n");
     printf("[1] - Attack\n");
-    printf("[2] - Exit\n");
+    printf("[2] - Healing\n");
     scanf("%d", &choice);
     if (choice == 1) {
         player_attack(&player,&monster);
         if ( monster.Hp > 0) {
             monster_attack(&player,&monster);
         }
+    } else if (choice == 2) {
+        player_heal(&player,&heal);
+        monster_attack(&player,&monster);
     }
-    else if (choice == 2) {
+    else if (choice == 0) {
         printf("You are out of the game\n");
         break;
     } else {
