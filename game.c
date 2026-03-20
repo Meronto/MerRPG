@@ -13,7 +13,8 @@ typedef struct
 {
     char Name[15];
     int Hp;
-    int Attack;
+    int min_attack;
+    int max_attack;
 } Monster ;
 
 void init_player(Player* player) {
@@ -23,8 +24,15 @@ void init_player(Player* player) {
 }
 
 void init_monster(Monster* monster) {
-    strcpy(monster->Name, "Amogus");
-    monster->Hp = 20;
+    Monster monster_list[3] = {
+        {"Amogus",30,3,6},
+        {"Slime",20,1,3},
+        {"Spider",25,2,4}
+    };
+    int id = rand() %3;
+    *monster = monster_list[id];
+    /*strcpy(monster->Name, "Amogus");
+    monster->Hp = 20;*/
 }
 
 void print_status(Player player,Monster monster){
@@ -46,7 +54,7 @@ void player_attack(Player* player,Monster* monster){
     }
 }
 void monster_attack(Player* player,Monster* monster){
-    int damage_monster = rand() % 5 + 1;
+    int damage_monster = rand() % (monster ->max_attack - monster ->min_attack +1) + monster ->min_attack;
     player ->Hp -= damage_monster;
     printf("Emeny caused %d damage\n",damage_monster);
         if (player ->Hp < 0) {
@@ -70,10 +78,9 @@ init_player(&player);
 init_monster(&monster);
 
 while(player.Hp > 0 && monster.Hp > 0 ) {
-    /*printf(" 0 \n")*/
     print_status(player,monster);
-    printf("1 - Attack\n");
-    printf("2 - Exit\n");
+    printf("[1] - Attack\n");
+    printf("[2] - Exit\n");
     scanf("%d", &choice);
     if (choice == 1) {
         player_attack(&player,&monster);
