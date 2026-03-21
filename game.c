@@ -19,6 +19,7 @@ typedef struct
     int Hp;
     int min_attack;
     int max_attack;
+    int type;
 } Monster ;
 
 typedef struct 
@@ -35,9 +36,9 @@ void init_player(Player* player) {
 
 void init_monster(Monster* monster) {
     Monster monster_list[3] = {
-        {"Amogus",30,3,6},
-        {"Slime",20,1,3},
-        {"Spider",25,2,4}
+        {"Amogus",30,3,6,0},
+        {"Slime",20,1,3,1},
+        {"Spider",25,2,4,2}
     };
     int id = rand() %3;
     *monster = monster_list[id];
@@ -46,9 +47,20 @@ void init_monster(Monster* monster) {
 
 void print_status(Player player,Monster monster){
     printf("\n--- MerRPG ---\n");
-    printf(" 0            /^^\\\n");
-    printf("/|\\           (00)\n");
-    printf("/ \\           /__\\\n");
+    if (monster.type == 0) {
+    printf(" 0             (AMOGUS)\n");
+    printf("/|\\             (00)\n");
+    printf("/ \\             /__\\\n");
+    } else if (monster.type == 1) {
+        printf(" 0            (SLIME)\n");
+        printf("/|\\            (00)\n");
+        printf("/ \\           /~~~\\\n");
+    } else if (monster.type == 2) {
+        printf(" 0             (SPIDER)\n");
+        printf("/|\\           //\\(oo)/\\\\\n");
+        printf("/ \\          //        \\\\\n");
+    }
+
     printf("%s HP: %d\n",player.Name, player.Hp);
     printf("%s HP: %d\n", monster.Name,monster.Hp);
 
