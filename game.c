@@ -72,7 +72,6 @@ void monster_attack(Player* player,Monster* monster){
 }
 
 void player_heal(Player* player, Heal* heal) {
-    Heal healing = {1,6};
     int heal_player = rand() % (heal ->max_heal - heal ->min_heal + 1) + heal->min_heal;
     player ->Hp += heal_player;
     printf("You have restored %d Hp\n", heal_player);
@@ -93,7 +92,7 @@ printf("|_|  |_|\\___|_|  |_| \\_\\_|    \\____|\n");
 int choice;
 Player player;
 Monster monster;
-Heal heal;
+Heal heal = {1,6};
 init_player(&player);
 init_monster(&monster);
 
